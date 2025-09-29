@@ -1,4 +1,5 @@
 import {LoadingScreen} from "./components/LoadingScreen.jsx";
+import "./App.css"
 import "./index.css"
 import {useState} from "react";
 import { Navbar } from "./components/Navbar.jsx";
