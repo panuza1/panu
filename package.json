@@ -1,6 +1,6 @@
 {
   "name": "vite-project",
-  "homepage" : "https://panuza1.github.io/panu",
+  "homepage": "https://panuza1.github.io/panu",
   "private": true,
   "version": "0.0.0",
   "type": "module",
@@ -9,14 +9,16 @@
     "build": "vite build",
     "lint": "eslint . --ext js, jsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
-    "predeploy" : "npm run build",
-    "deploy" : "gh-pages -d dist"
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d dist"
   },
   "dependencies": {
     "@tailwindcss/vite": "^4.1.13",
     "emailjs-com": "^3.2.0",
+    "lucide-react": "^0.544.0",
     "react": "^19.1.1",
     "react-dom": "^19.1.1",
+    "react-syntax-highlighter": "^15.6.6",
     "tailwindcss": "^4.1.13"
   },
   "devDependencies": {
