@@ -1,4 +1,3 @@
-import './App.css';
 import {LoadingScreen} from "./components/LoadingScreen.jsx";
 import "./index.css"
 import {useState} from "react";
