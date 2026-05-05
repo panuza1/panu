@@ -9,6 +9,7 @@ import {Projects} from "./components/sections/Projects.jsx";
 import {About} from "./components/sections/About.jsx";
 import { Blog } from "./components/sections/Blog.jsx";
 import { BlogDetail } from "./components/sections/BlogDetail.jsx";
+import { VibeCheck } from "./components/sections/VibeCheck.jsx";
 
 function App() {
     const [isLoading, setIsLoading] = useState(false);
@@ -20,8 +21,8 @@ function App() {
             <div
                 className={`min-h-screen transition-opacity duration-700 bg-black text-gray-100`}
             >
-                <Navbar menuOpen={menuOpen} setMenuOpen={setMenuOpen} />
-                <MobileMenu menuOpen={menuOpen} setMenuOpen={setMenuOpen} />
+                <Navbar menuOpen={menuOpen} setMenuOpen={setMenuOpen} setCurrentPage={setCurrentPage} />
+                <MobileMenu menuOpen={menuOpen} setMenuOpen={setMenuOpen} setCurrentPage={setCurrentPage} />
 
                 {currentPage.page === "home" && (
                     <>
@@ -34,6 +35,10 @@ function App() {
 
                 {currentPage.page === "blogDetail" && (
                     <BlogDetail setCurrentPage={setCurrentPage} post={currentPage.post} />
+                )}
+
+                {currentPage.page === "vibe" && (
+                    <VibeCheck onBack={() => setCurrentPage({ page: "home", post: null })} />
                 )}
             </div>
         </>
