@@ -53,13 +53,6 @@ export const Navbar = ({ menuOpen, setMenuOpen, setCurrentPage }) => {
                             Project
                         </a>
                         <a
-                            href="#vibe-check"
-                            className="text-gray-300 hover:text-white transition-colors"
-                            onClick={() => handleSectionClick("vibe")}
-                        >
-                            Vibe
-                        </a>
-                        <a
                             href="#blog"
                             className="text-gray-300 hover:text-white transition-colors"
                             onClick={() => handleSectionClick("home")}
