@@ -14,12 +14,12 @@ import { AboutPanel, ProjectsPanel, BlogPanel } from "./InfoPanel.jsx";
 import { ControlsHint, Speedometer, AreaPrompt, TopBar, TouchControls } from "./HUD.jsx";
 
 const DAY_SKY = "#b9cfe0";
-const NIGHT_SKY = "#121824";
+const NIGHT_SKY = "#1a2438";
 
 function ToneExposure({ night }) {
     const gl = useThree((s) => s.gl);
     useEffect(() => {
-        gl.toneMappingExposure = night ? 0.85 : 1.15;
+        gl.toneMappingExposure = night ? 1.05 : 1.15;
     }, [gl, night]);
     return null;
 }
@@ -28,12 +28,12 @@ function WorldLights({ night }) {
     if (night) {
         return (
             <>
-                <ambientLight intensity={0.14} color="#6a7a9a" />
-                <hemisphereLight args={["#1e2a40", "#0a0c10", 0.35]} />
+                <ambientLight intensity={0.32} color="#8a9bb8" />
+                <hemisphereLight args={["#3a4a68", "#1a1820", 0.55]} />
                 {/* Moon */}
                 <directionalLight
                     position={[18, 32, -12]}
-                    intensity={0.35}
+                    intensity={0.55}
                     castShadow
                     shadow-mapSize={[1024, 1024]}
                     shadow-camera-near={1}
@@ -44,9 +44,9 @@ function WorldLights({ night }) {
                     shadow-camera-bottom={-40}
                     shadow-bias={-0.00015}
                     shadow-normalBias={0.04}
-                    color="#c8d4f0"
+                    color="#d0daf0"
                 />
-                <directionalLight position={[-16, 10, 8]} intensity={0.12} color="#4a6080" />
+                <directionalLight position={[-16, 10, 8]} intensity={0.22} color="#6a80a0" />
             </>
         );
     }
@@ -103,8 +103,8 @@ export function Scene3D() {
     }, [currentArea]);
 
     const sky = night ? NIGHT_SKY : DAY_SKY;
-    const fogNear = night ? 28 : 45;
-    const fogFar = night ? 78 : 95;
+    const fogNear = night ? 36 : 45;
+    const fogFar = night ? 95 : 95;
 
     return (
         <div style={{
@@ -118,7 +118,7 @@ export function Scene3D() {
                     antialias: true,
                     powerPreference: "high-performance",
                     toneMapping: THREE.ACESFilmicToneMapping,
-                    toneMappingExposure: night ? 0.85 : 1.15,
+                    toneMappingExposure: night ? 1.05 : 1.15,
                 }}
                 dpr={[1, 1.75]}
                 onCreated={({ gl }) => {
