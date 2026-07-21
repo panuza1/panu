@@ -1,35 +1,31 @@
 import { useState } from "react";
 
-const px = {
-    fontFamily: "'Press Start 2P', 'Courier New', monospace",
-};
+const font = { fontFamily: "'Nunito', system-ui, sans-serif" };
 
-function Panel({ onClose, title, accent, children }) {
+function Panel({ onClose, title, children }) {
     return (
         <div style={{
             position: "fixed", inset: 0, zIndex: 50,
             display: "flex", alignItems: "center", justifyContent: "center",
-            background: "rgba(0,0,0,0.7)", backdropFilter: "blur(4px)",
+            background: "rgba(60,50,40,0.35)", backdropFilter: "blur(6px)",
+            padding: 16,
         }}>
             <div style={{
-                background: "#0f0e17", border: `3px solid ${accent}`,
-                borderRadius: 0, padding: 0, width: "min(480px,92vw)",
-                boxShadow: `6px 6px 0 ${accent}`,
-                imageRendering: "pixelated",
+                background: "rgba(255,255,255,0.95)", borderRadius: 20,
+                width: "min(460px, 94vw)", boxShadow: "0 20px 50px rgba(60,50,40,0.2)",
+                overflow: "hidden",
             }}>
-                {/* Title bar */}
                 <div style={{
-                    background: accent, padding: "10px 16px",
-                    display: "flex", alignItems: "center", justifyContent: "space-between",
+                    padding: "16px 20px", display: "flex", alignItems: "center",
+                    justifyContent: "space-between", borderBottom: "1px solid rgba(90,74,58,0.08)",
                 }}>
-                    <span style={{ ...px, fontSize: 12, color: "#fff", letterSpacing: 1 }}>{title}</span>
+                    <span style={{ ...font, fontSize: 18, fontWeight: 800, color: "#5a4a3a" }}>{title}</span>
                     <button onClick={onClose} style={{
-                        background: "none", border: "2px solid #fff", color: "#fff",
-                        cursor: "pointer", padding: "2px 8px", ...px, fontSize: 12,
-                    }}>X</button>
+                        ...font, fontSize: 20, border: "none", background: "transparent",
+                        color: "#8a7a6a", cursor: "pointer", lineHeight: 1,
+                    }}>×</button>
                 </div>
-                {/* Content */}
-                <div style={{ padding: "20px 20px 24px", overflowY: "auto", maxHeight: "60vh" }}>
+                <div style={{ padding: "20px 22px 24px", overflowY: "auto", maxHeight: "65vh" }}>
                     {children}
                 </div>
             </div>
@@ -37,39 +33,37 @@ function Panel({ onClose, title, accent, children }) {
     );
 }
 
-function Tag({ children, color }) {
+function Tag({ children }) {
     return (
         <span style={{
-            display: "inline-block", border: `2px solid ${color}`, color: color,
-            padding: "2px 8px", marginRight: 6, marginBottom: 6,
-            ...px, fontSize: 8,
+            display: "inline-block", ...font, fontSize: 12, fontWeight: 700,
+            color: "#6a5a4a", background: "rgba(90,74,58,0.08)",
+            padding: "4px 10px", borderRadius: 999, marginRight: 6, marginBottom: 6,
         }}>{children}</span>
     );
 }
 
 export function AboutPanel({ onClose }) {
     return (
-        <Panel onClose={onClose} title="▸ ABOUT ME" accent="#4cc9f0">
-            <p style={{ color: "#e0fbfc", lineHeight: 1.9, fontSize: 13, marginBottom: 16 }}>
-                Hi! I'm <span style={{ color: "#4cc9f0" }}>Panupong Chaichun</span>{" "}
-                (call me <span style={{ color: "#4cc9f0" }}>Jeng</span>) 👋
+        <Panel onClose={onClose} title="About Me">
+            <p style={{ ...font, color: "#5a4a3a", lineHeight: 1.7, fontSize: 15, marginBottom: 12 }}>
+                Hi! I'm <strong>Panupong Chaichun</strong> — you can call me <strong>Jeng</strong>.
             </p>
-            <p style={{ color: "#a8dadc", lineHeight: 1.8, fontSize: 12, marginBottom: 20 }}>
-                Currently studying Information Technology at{" "}
-                <span style={{ color: "#ffe169" }}>KMUTT</span> — King Mongkut's University of Technology Thonburi.
+            <p style={{ ...font, color: "#7a6a5a", lineHeight: 1.7, fontSize: 14, marginBottom: 18 }}>
+                Currently studying Information Technology at King Mongkut's University of Technology Thonburi (KMUTT).
             </p>
-            <div style={{ marginBottom: 20 }}>
-                {["React", "Python", "JavaScript", "Three.js", "Node.js"].map(t => (
-                    <Tag key={t} color="#4cc9f0">{t}</Tag>
+            <div style={{ marginBottom: 18 }}>
+                {["React", "Python", "JavaScript", "Three.js", "Node.js"].map((t) => (
+                    <Tag key={t}>{t}</Tag>
                 ))}
             </div>
             <a href="https://github.com/panuza1" target="_blank" rel="noopener noreferrer"
                 style={{
-                    display: "inline-block", background: "#4cc9f0", color: "#0f0e17",
-                    padding: "8px 18px", ...px, fontSize: 10, textDecoration: "none",
-                    border: "3px solid #fff", boxShadow: "3px 3px 0 #fff",
+                    ...font, display: "inline-block", fontWeight: 800, fontSize: 14,
+                    color: "#fff", background: "#c48b7a", textDecoration: "none",
+                    padding: "10px 18px", borderRadius: 999,
                 }}>
-                ★ GITHUB
+                GitHub →
             </a>
         </Panel>
     );
@@ -81,27 +75,23 @@ const projects = [
         desc: "Calculate entropy and weighted average entropy for decision trees.",
         tech: ["Python"],
         link: "https://github.com/panuza1/calculate_entropy_and_Weigh_Avg_Ent",
-        color: "#ff6b6b",
     },
 ];
 
 export function ProjectsPanel({ onClose }) {
     return (
-        <Panel onClose={onClose} title="▸ PROJECTS" accent="#ff6b6b">
-            <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
+        <Panel onClose={onClose} title="Projects">
+            <div style={{ display: "flex", flexDirection: "column", gap: 14 }}>
                 {projects.map((p, i) => (
                     <div key={i} style={{
-                        border: `2px solid ${p.color}`, padding: 14,
-                        boxShadow: `3px 3px 0 ${p.color}`,
+                        background: "rgba(90,74,58,0.04)", borderRadius: 14, padding: 14,
                     }}>
-                        <div style={{ ...px, fontSize: 10, color: p.color, marginBottom: 8 }}>{p.title}</div>
-                        <p style={{ color: "#ccc", fontSize: 12, lineHeight: 1.7, marginBottom: 10 }}>{p.desc}</p>
-                        <div style={{ marginBottom: 10 }}>
-                            {p.tech.map(t => <Tag key={t} color={p.color}>{t}</Tag>)}
-                        </div>
+                        <div style={{ ...font, fontSize: 16, fontWeight: 800, color: "#5a4a3a", marginBottom: 6 }}>{p.title}</div>
+                        <p style={{ ...font, fontSize: 13, color: "#7a6a5a", lineHeight: 1.6, marginBottom: 10 }}>{p.desc}</p>
+                        <div style={{ marginBottom: 8 }}>{p.tech.map((t) => <Tag key={t}>{t}</Tag>)}</div>
                         <a href={p.link} target="_blank" rel="noopener noreferrer"
-                            style={{ color: p.color, fontSize: 11, ...px, textDecoration: "none" }}>
-                            ▸ VIEW PROJECT
+                            style={{ ...font, fontSize: 13, fontWeight: 700, color: "#c48b7a", textDecoration: "none" }}>
+                            View project →
                         </a>
                     </div>
                 ))}
@@ -126,26 +116,24 @@ const posts = [
 export function BlogPanel({ onClose }) {
     const [selected, setSelected] = useState(null);
     return (
-        <Panel onClose={onClose} title="▸ BLOG" accent="#ffe169">
+        <Panel onClose={onClose} title="Blog">
             {selected ? (
                 <div>
-                    <button onClick={() => setSelected(null)}
-                        style={{ ...px, fontSize: 9, color: "#ffe169", background: "none", border: "none", cursor: "pointer", marginBottom: 14 }}>
-                        ◂ BACK
-                    </button>
-                    <div style={{ ...px, fontSize: 10, color: "#ffe169", marginBottom: 12 }}>{selected.title}</div>
-                    <p style={{ color: "#ccc", lineHeight: 1.8, fontSize: 12 }}>{selected.body}</p>
+                    <button onClick={() => setSelected(null)} style={{
+                        ...font, fontSize: 13, fontWeight: 700, color: "#c48b7a",
+                        background: "none", border: "none", cursor: "pointer", marginBottom: 12,
+                    }}>← Back</button>
+                    <div style={{ ...font, fontSize: 16, fontWeight: 800, color: "#5a4a3a", marginBottom: 10 }}>{selected.title}</div>
+                    <p style={{ ...font, fontSize: 14, color: "#6a5a4a", lineHeight: 1.75 }}>{selected.body}</p>
                 </div>
             ) : (
-                <div style={{ display: "flex", flexDirection: "column", gap: 14 }}>
+                <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
                     {posts.map((p, i) => (
-                        <div key={i} style={{
-                            border: "2px solid #ffe169", padding: 14, cursor: "pointer",
-                            boxShadow: "3px 3px 0 #ffe169",
-                        }} onClick={() => setSelected(p)}>
-                            <div style={{ ...px, fontSize: 9, color: "#ffe169", marginBottom: 8 }}>{p.title}</div>
-                            <p style={{ color: "#aaa", fontSize: 12, lineHeight: 1.6, marginBottom: 6 }}>{p.excerpt}</p>
-                            <span style={{ ...px, fontSize: 8, color: "#ffe169" }}>▸ READ MORE</span>
+                        <div key={i} onClick={() => setSelected(p)} style={{
+                            background: "rgba(90,74,58,0.04)", borderRadius: 14, padding: 14, cursor: "pointer",
+                        }}>
+                            <div style={{ ...font, fontSize: 15, fontWeight: 800, color: "#5a4a3a", marginBottom: 6 }}>{p.title}</div>
+                            <p style={{ ...font, fontSize: 13, color: "#7a6a5a", lineHeight: 1.55 }}>{p.excerpt}</p>
                         </div>
                     ))}
                 </div>

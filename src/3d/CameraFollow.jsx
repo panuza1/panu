@@ -2,28 +2,36 @@ import { useRef } from "react";
 import { useFrame, useThree } from "@react-three/fiber";
 import * as THREE from "three";
 
+// Bruno-style isometric follow:
+ // camera stays on a fixed diagonal angle (doesn't spin with the car),
+ // high above, looking down ~45°, smoothly tracking the car.
+const OFFSET = new THREE.Vector3(16, 18, 16);
+const LOOK_AHEAD = new THREE.Vector3(0, 0.3, 0);
+
 export function CameraFollow({ carRef }) {
     const { camera } = useThree();
-    const camPos = useRef(new THREE.Vector3(0, 10, -18));
+    const camPos = useRef(new THREE.Vector3(16, 18, 16));
     const lookAt = useRef(new THREE.Vector3(0, 0, 0));
+    const ready = useRef(false);
 
     useFrame(() => {
         if (!carRef?.current) return;
         const pos = carRef.current.position();
-        const vel = carRef.current.velocity();
         if (!pos) return;
 
-        // Camera offset in car's local space (behind and above)
-        const heading = carRef.current.heading?.() ?? 0;
-        const dist = 14;
-        const height = 8;
-        const tx = pos.x - Math.sin(heading) * dist;
-        const tz = pos.z - Math.cos(heading) * dist;
+        const target = new THREE.Vector3(pos.x, pos.y, pos.z).add(LOOK_AHEAD);
+        const desired = target.clone().add(OFFSET);
 
-        camPos.current.lerp(new THREE.Vector3(tx, pos.y + height, tz), 0.07);
+        if (!ready.current) {
+            camPos.current.copy(desired);
+            lookAt.current.copy(target);
+            ready.current = true;
+        } else {
+            camPos.current.lerp(desired, 0.06);
+            lookAt.current.lerp(target, 0.1);
+        }
+
         camera.position.copy(camPos.current);
-
-        lookAt.current.lerp(new THREE.Vector3(pos.x, pos.y + 1, pos.z), 0.1);
         camera.lookAt(lookAt.current);
     });
 
