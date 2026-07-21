@@ -19,17 +19,17 @@ function StreetLamp({ x, z, lit = false }) {
                 <boxGeometry args={[0.28, 0.16, 0.22]} />
                 <meshStandardMaterial
                     color="#fff8e1"
-                    emissive={lit ? "#ffd27a" : "#fff3c4"}
-                    emissiveIntensity={lit ? 3.2 : 0.35}
+                    emissive={lit ? "#ffcc66" : "#fff3c4"}
+                    emissiveIntensity={lit ? 2.4 : 0.35}
                 />
             </mesh>
             {lit && (
                 <pointLight
                     position={[0.65, 2.7, 0]}
-                    intensity={3.2}
-                    distance={18}
-                    decay={1.6}
-                    color="#ffe0a8"
+                    intensity={1.8}
+                    distance={14}
+                    decay={2}
+                    color="#ffd89a"
                 />
             )}
         </group>
@@ -218,21 +218,8 @@ function alongSamples(samples, every, sideOff) {
 }
 
 export function AmbientDetails({ carRef, night = false }) {
-    const lamps = useMemo(() => alongSamples(trackSamples, 16, 3.2).slice(0, 12), []);
-    const raceLamps = useMemo(() => alongSamples(raceSamples, 14, RACE_WIDTH / 2 + 1.8).slice(0, 14), []);
-    const plazaLamps = useMemo(
-        () => [
-            [0, 4],
-            [-6, -2],
-            [6, -2],
-            [-12, -10],
-            [12, -10],
-            [0, 14],
-            [-10, 6],
-            [10, 6],
-        ].map(([x, z]) => ({ x, z })),
-        []
-    );
+    const lamps = useMemo(() => alongSamples(trackSamples, 28, 3.2).slice(0, 8), []);
+    const raceLamps = useMemo(() => alongSamples(raceSamples, 28, RACE_WIDTH / 2 + 1.8).slice(0, 6), []);
     const kerbs = useMemo(() => alongSamples(raceSamples, 8, RACE_WIDTH / 2 + 0.2), []);
     const boards = useMemo(() => {
         return [0.12, 0.38, 0.64, 0.9].map((t) => {
@@ -259,9 +246,6 @@ export function AmbientDetails({ carRef, night = false }) {
             ))}
             {raceLamps.map((l, i) => (
                 <StreetLamp key={`rlamp${i}`} x={l.x} z={l.z} lit={night} />
-            ))}
-            {plazaLamps.map((l, i) => (
-                <StreetLamp key={`plamp${i}`} x={l.x} z={l.z} lit={night} />
             ))}
 
             {kerbs.map((k, i) => (
